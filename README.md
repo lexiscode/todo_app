@@ -13,3 +13,4 @@ This is a web application used to manage and list daily, weekly or monthly task 
 
 https://github.com/lexiscode/todo-app/assets/42210784/5f08c797-90ab-46fc-82fe-e6555909dae0
 
+.
