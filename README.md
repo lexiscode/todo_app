@@ -1,5 +1,6 @@
 # todo-app
 This is a web application used to manage and list daily, weekly or monthly task plans.
+When testing it in your php local server, ensure to first change the filename you wish to test to index.php
 
 - **working with text file**
 
