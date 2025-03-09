@@ -9,52 +9,52 @@ if (!file_exists($filePath)) {
     fclose($file);
 }
 
-// Function to read the todo list from the file
+// Function to read the todo list from the file to an array
 function readTodoList()
 {
     global $filePath;
-    $todoList = [];
+    $todoList = []; // initializes the array as being empty
 
-    $file = fopen($filePath, 'r');
-    while (($line = fgets($file)) !== false) {
-        $todoList[] = trim($line);
+    $file = fopen($filePath, 'r'); // opens the file first and granting read permission
+    while (($line = fgets($file)) !== false) { 
+        $todoList[] = trim($line); // gets the data values for each lines in the file and then add it into the array
     }
     fclose($file);
 
     return $todoList;
 }
 
-// Function to write the todo list to the file
+// Function to write the todo list from an array to the file
 function writeTodoList($todoList)
 {
     global $filePath;
 
-    $file = fopen($filePath, 'w');
+    $file = fopen($filePath, 'w'); // opens the file first and granting write permission
     foreach ($todoList as $todo) {
-        fwrite($file, $todo . PHP_EOL);
+        fwrite($file, $todo . PHP_EOL);  // writes data values loop by loop into the file
     }
     fclose($file);
 }
 
 // Add a task to the todo list
-if (isset($_POST['addTask'])) {  // the button is pushed to True
+if (isset($_POST['addTask'])) {  // checks if the button is pushed/clicked, which will turn to "True"
     $task = trim($_POST['task']); // the value of the input is received due to the pushed button
 
     if (!empty($task)) {
-        $todoList = readTodoList(); //bringing out the list from the .txt file
+        $todoList = readTodoList(); //bringing out the list from the .txt file to array
         $todoList[] = $task; // adding to the array list
         writeTodoList($todoList); // taking it back (overwriting/updating) into the .txt file
     }
 }
 
-// Remove a task from the todo list
-if (isset($_POST['removeTask'])) {  // the button is pushed to True
+// Deletes a task from the todo list
+if (isset($_POST['removeTask'])) {  // checks if the button is pushed/clicked, which will turn to "True"
     $index = $_POST['index']; // the value of the input is received due to the pushed button
 
-    $todoList = readTodoList(); //bringing out the list from the .txt file
-    if (isset($todoList[$index])) {
-        unset($todoList[$index]); // removing from the array list
-        writeTodoList($todoList); // taking it back (overwriting/updating) into the .txt file
+    $todoList = readTodoList(); //bringing out the list from the .txt file to an array
+    if (isset($todoList[$index])) { // if the key/index exists in this array
+        unset($todoList[$index]); // remove the specified data (in that index) from the array list
+        writeTodoList($todoList); // taking the latest/updated array list back into the .txt file
     }
 }
 
@@ -63,18 +63,13 @@ if (isset($_POST['index']) && isset($_POST['updated_task'])) {
     $editIndex = $_POST['index'];
     $updatedTask = $_POST['updated_task'];
 
-    $todoList = readTodoList();
+    $todoList = readTodoList(); //bringing out the list from the .txt file to array
 
-    // Update the task
     if (isset($todoList[$editIndex])) { 
-        $todoList[$editIndex] = $updatedTask;
-
-    // Save the updated todo list back to the txt file
-    writeTodoList($todoList);
+        $todoList[$editIndex] = $updatedTask; // Update or overwrite the specific task
+        writeTodoList($todoList); // Save the updated todo list back to the txt file
     }
 }
-
-
 
 // Clear the todo list and delete file content
 if (isset($_POST['clearLists'])) {
@@ -89,7 +84,7 @@ function taskNumber(){
     $a++;
 }
 
-// Retrieve the current todo list
+// Retrieve the current todo list from the file to an array
 $todoList = readTodoList(); // its this current list we are viewing in our html page
 
 ?>
@@ -128,7 +123,7 @@ $todoList = readTodoList(); // its this current list we are viewing in our html 
             <h1>Your Lists</h1>
 
             <table class="table table-dark table-hover">
-                <thead align="center">
+                <thead style="text-align: center;">
                     <tr>
                     <th scope="col">S/N</th>
                     <th scope="col">Tasks</th>
@@ -140,7 +135,7 @@ $todoList = readTodoList(); // its this current list we are viewing in our html 
 
                 <?php if (!empty($todoList)) : ?>
 
-                <tbody align="center">
+                <tbody style="text-align: center;">
                     <?php foreach ($todoList as $index => $task) : ?>
                         <tr>
                             <td><?php taskNumber()?></td>
